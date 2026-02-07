@@ -14,10 +14,14 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.SpeedConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.RunIntakeCommand;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.RunIntakeCommand;
 import frc.robot.subsystems.DriveSub;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.ShootSub;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LedSubsystem;
 
 
 
@@ -34,9 +38,11 @@ public class RobotContainer {
   //----------------------------
   // We have three subsystems
   //---------------------------- 
-  private final ShootSub m_ShootSub = new ShootSub();
-  private final DriveSub m_DriveSub = new DriveSub();
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private  ShootSub m_ShootSub = new ShootSub();
+  private DriveSub m_DriveSub = new DriveSub();
+  private  ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private IntakeSubsystem intake = new IntakeSubsystem();
+  private LedSubsystem led = new LedSubsystem();
 
 
 
@@ -102,6 +108,7 @@ public class RobotContainer {
 
 
   private void configureBindings() {
+    m_driverController.a().whileTrue(new RunIntakeCommand(intake, led));
    
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     //new Trigger(m_exampleSubsystem::exampleCondition).onTrue(new ExampleCommand(m_exampleSubsystem));
