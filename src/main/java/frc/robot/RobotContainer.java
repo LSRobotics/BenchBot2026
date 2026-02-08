@@ -42,6 +42,8 @@ public class RobotContainer {
   private final DriveSub m_DriveSub = new DriveSub();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ServoSubsystem mServo =  new ServoSubsystem(5);
+  private final ActuatorSubsystem a1 = new ActuatorSubsystem(1);
+  private final ActuatorSubsystem a2 = new ActuatorSubsystem(0);
 
 
 
@@ -92,7 +94,7 @@ public class RobotContainer {
    m_operatorController.rightBumper().whileTrue(new ShootCommand(m_ShootSub,SpeedConstants.FAST_FORWARD,SpeedConstants.FAST_FORWARD));
    m_operatorController.leftBumper().whileTrue(new ShootCommand(m_ShootSub,SpeedConstants.FAST_REVERSE,SpeedConstants.FAST_REVERSE));
 
-   m_operatorController.a().onTrue(new InstantCommand(() -> mServo.run(SmartDashboard.getNumber("speed",0))));
+   m_operatorController.a().onTrue(new InstantCommand(() -> a1.run(SmartDashboard.getNumber("speed",0))).alongWith(new InstantCommand(()->a2.run(SmartDashboard.getNumber("speed", 0)))));
   }
 
 
