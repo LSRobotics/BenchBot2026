@@ -7,7 +7,9 @@ package frc.robot;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
@@ -15,8 +17,10 @@ import frc.robot.Constants.SpeedConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ShootCommand;
+import frc.robot.subsystems.ActuatorSubsystem;
 import frc.robot.subsystems.DriveSub;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.ServoSubsystem;
 import frc.robot.subsystems.ShootSub;
 
 
@@ -37,6 +41,7 @@ public class RobotContainer {
   private final ShootSub m_ShootSub = new ShootSub();
   private final DriveSub m_DriveSub = new DriveSub();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final ServoSubsystem mServo =  new ServoSubsystem(5);
 
 
 
@@ -67,6 +72,7 @@ public class RobotContainer {
   //===================================================================================
 
   public RobotContainer() {
+    SmartDashboard.putNumber("speed",0);
     
     // Configure the trigger bindings
     configureBindings();
@@ -86,7 +92,7 @@ public class RobotContainer {
    m_operatorController.rightBumper().whileTrue(new ShootCommand(m_ShootSub,SpeedConstants.FAST_FORWARD,SpeedConstants.FAST_FORWARD));
    m_operatorController.leftBumper().whileTrue(new ShootCommand(m_ShootSub,SpeedConstants.FAST_REVERSE,SpeedConstants.FAST_REVERSE));
 
-   m_operatorController.a().whileTrue(new ShootCommand(m_ShootSub,SpeedConstants.FAST_FORWARD,SpeedConstants.FAST_FORWARD));
+   m_operatorController.a().onTrue(new InstantCommand(() -> mServo.run(SmartDashboard.getNumber("speed",0))));
   }
 
 
