@@ -1,7 +1,6 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-//Hello World
 
 package frc.robot;
 
@@ -18,6 +17,10 @@ import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.DriveSub;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.ShootSub;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.commands.RunIntakeCommand;
+
 
 
 
@@ -31,12 +34,14 @@ import frc.robot.subsystems.ShootSub;
 
 public class RobotContainer {
 
-  //----------------------------
+  //--------------------------
   // We have three subsystems
   //---------------------------- 
-  private final ShootSub m_ShootSub = new ShootSub();
-  private final DriveSub m_DriveSub = new DriveSub();
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private ShootSub m_ShootSub = new ShootSub();
+  private DriveSub m_DriveSub = new DriveSub();
+  private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private IntakeSubsystem intake = new IntakeSubsystem();
+  private LEDSubsystem led = new LEDSubsystem();
 
 
 
@@ -109,6 +114,8 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_driverController.b().whileTrue(m_DriveSub.run(action)());
+
+    m_driverController.a().whileTrue((new RunIntakeCommand(intake, led)));
   }
 
   /**
